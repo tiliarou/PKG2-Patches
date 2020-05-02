@@ -1,6 +1,6 @@
 # Loader Patches
 
-The loader patches accomplishes two things: bypassing ACID signature checks, and allowing running of SDK applications.
+The loader patches accomplishes two things: bypassing ACID signature checks, and allows running of SDK applications.
 
 ## ACID Signature Bypass
 
@@ -36,7 +36,7 @@ Result ValidateAcidSignature(Meta *meta) {
 }
 ```
 
-In assembly we are changing the instruction `cmp w0,#0xA` to `cmp w0,#0xFF`, which requires patching 2 bytes 0x2800 to 0xFC03. The location of the two bytes varies between versions of Atmosphère.
+In assembly we are changing the instruction `cmp w0,#0xA` to `cmp w0,#0xFF`, which requires patching 2 bytes: 0x2800 to 0xFC03. The location of the two bytes varies between versions of Atmosphère.
 
 ## Running of SDK Applications
 
@@ -56,4 +56,4 @@ bool IsDevelopmentForAcidProductionCheck() {
 }
 ```
 
-In assembly we are changing the instruction `ldrb w0,[x0, #0x178]` to `mov w0,#0x1`, which requires patching 4 bytes 0x00E44539 to 0x20008052. The location of the two bytes varies between versions of Atmosphère.
+In assembly we are changing the instruction `ldrb w0,[x0, #0x178]` to `mov w0,#0x1`, which requires patching 4 bytes: 0x00E44539 to 0x20008052. The location of the four bytes varies between versions of Atmosphère.
