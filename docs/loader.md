@@ -1,10 +1,10 @@
 # Loader Patches
 
-The loader patches accomplishes two things: bypassing ACID signature checks, and allows running of SDK applications.
+The loader patches accomplish two things: bypassing ACID signature checks, and allows running of SDK applications. The purpose of bypassing the ACID signature check is because some installers modify the ACID section of the NPDM file, which makes the signature no longer valid.
 
 ## ACID Signature Bypass
 
-In Atmosphère they have to support all firmwares, and before firmware 10.0.0 FS handled the ACID signature checks. So to bypass ACID signature checks I just make Atmosphère think we are below firmware 10.0.0. The original function looks like so:
+In Atmosphère they have to support all firmwares, and before firmware 10.0.0 FS handled the ACID signature checks. So to bypass ACID signature checks I just make Atmosphère think the user is on a firmware below 10.0.0. The original function of where the check is looks like so:
 
 ```cpp
 Result ValidateAcidSignature(Meta *meta) {
@@ -40,7 +40,7 @@ In assembly we are changing the instruction `cmp w0,#0xA` to `cmp w0,#0xFF`, whi
 
 ## Running of SDK Applications
 
-In Atmosphère they added checks to stop users from running SDK applications such as DevMenu on their retail Switches. (This is perfectly acceptable as Atmosphère's focus is to reimplement Nintendo's built-in functionality.) So to make this work I just make Atmosphère think you are running on a development Switch. The original function looks like so:
+In Atmosphère they added checks to stop users from running SDK applications such as DevMenu on their retail Switches. (This is because Atmosphère's focus is to reimplement Nintendo's built-in functionality accurately.) So to make this work I just have to make Atmosphère think you are running on a development Switch. The original function looks like so:
 
 ```cpp
 bool IsDevelopmentForAcidProductionCheck() {
